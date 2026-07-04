@@ -1,0 +1,34 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs and temp files
+*.log
+*.tmp
+*.cache
+php_errors.log
+error_log
+
+# Local environment / secrets
+.env
+.env.*
+app/config/config.php
+
+# Public upload files and generated media
+public/assets/uploads/*
+!public/assets/uploads/.gitkeep
+
+# Local storage contents
+storage/*
+!storage/.gitkeep
+
+# Debug/admin helper scripts
+public/debug-login.php
+public/reset-pass.php
+public/update-settings.php
