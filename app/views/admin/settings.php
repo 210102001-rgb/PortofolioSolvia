@@ -75,6 +75,42 @@
     </form>
   </div>
 
+  <!-- Invoice Signature -->
+  <div class="bg-[#0F172A]/60 border border-white/8 rounded-2xl p-6">
+    <h3 class="text-white font-bold text-base mb-2 flex items-center gap-2">
+      <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+      Invoice — Tanda Tangan
+    </h3>
+    <p class="text-slate-500 text-xs mb-5">Gambar tanda tangan global untuk semua invoice. TTD per-invoice bisa diatur di halaman invoice.</p>
+    <form action="<?= url('/sso/settings/update') ?>" method="POST" enctype="multipart/form-data">
+      <?= csrf_field() ?>
+      <?php foreach([
+        ['signatory_name', 'Nama Penandatangan', 'text', 'Ahmad Rizki Firmansyah'],
+        ['signatory_role', 'Jabatan',            'text', 'Chief Executive Officer'],
+      ] as [$key,$label,$type,$placeholder]): ?>
+      <div>
+        <label class="block text-slate-400 text-sm font-medium mb-2"><?= $label ?></label>
+        <input type="<?= $type ?>" name="<?= $key ?>" value="<?= e($settings[$key] ?? '') ?>" placeholder="<?= $placeholder ?>"
+          class="w-full bg-white/5 border border-white/10 focus:border-blue-500/50 text-white placeholder-slate-600 rounded-xl px-4 py-3 text-sm outline-none transition-colors">
+      </div>
+      <?php endforeach; ?>
+      <div class="mt-4">
+        <label class="block text-slate-400 text-sm font-medium mb-2">Gambar Tanda Tangan</label>
+        <input type="file" name="signature_image" accept="image/png,image/jpeg,image/webp"
+          class="w-full bg-white/5 border border-white/10 focus:border-blue-500/50 text-slate-300 file:text-white file:bg-blue-600/20 file:border-0 file:rounded-lg file:px-3 file:py-1.5 file:mr-3 file:text-sm file:font-medium cursor-pointer rounded-xl px-3 py-2.5 text-sm outline-none transition-colors">
+        <?php if (!empty($settings['signature_image'])): ?>
+        <div class="mt-3 flex items-center gap-3">
+          <img src="<?= url($settings['signature_image']) ?>" alt="Signature" style="height:50px; width:auto; object-fit:contain;">
+          <span class="text-xs text-slate-500">File sudah ada, upload ulang untuk mengganti</span>
+        </div>
+        <?php endif; ?>
+      </div>
+      <div class="mt-4">
+        <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl transition-all duration-200 text-sm">Simpan</button>
+      </div>
+    </form>
+  </div>
+
   <!-- Video Showcase -->
   <div class="bg-[#0F172A]/60 border border-white/8 rounded-2xl p-6">
     <h3 class="text-white font-bold text-base mb-2 flex items-center gap-2">

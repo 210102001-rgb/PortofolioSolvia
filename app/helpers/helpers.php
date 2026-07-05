@@ -19,7 +19,7 @@ function lang(): string {
  * @param  array  $replace  e.g. ['name' => 'Solvia Nova']
  * @return string
  */
-function __(string $key, array $replace = []): string {
+function __(string $key, array $replace = []): mixed {
     static $translations = [];
     $currentLang = lang();
 
@@ -30,7 +30,7 @@ function __(string $key, array $replace = []): string {
 
     $line = $translations[$currentLang][$key] ?? $key;
 
-    if (!empty($replace)) {
+    if (is_string($line) && !empty($replace)) {
         foreach ($replace as $k => $v) {
             $line = str_replace(':' . $k, $v, $line);
         }
@@ -43,7 +43,8 @@ function __(string $key, array $replace = []): string {
  * Like __() but also HTML-escapes the output.
  */
 function __e(string $key, array $replace = []): string {
-    return e(__($key, $replace));
+    $val = __($key, $replace);
+    return is_string($val) ? e($val) : '';
 }
 
 /**

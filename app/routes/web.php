@@ -88,6 +88,14 @@ $router->post('/sso/seo/update', 'AdminSeoController@update');
 $router->get('/sso/settings', 'AdminController@settings');
 $router->post('/sso/settings/update', 'AdminController@updateSettings');
 
+// Invoice Admin
+$router->get('/sso/invoice', 'AdminInvoiceController@index');
+$router->any('/sso/invoice/create', 'AdminInvoiceController@create');
+$router->get('/sso/invoice/{id}', 'AdminInvoiceController@show');
+$router->get('/sso/invoice/{id}/print', 'AdminInvoiceController@printInvoice');
+$router->any('/sso/invoice/{id}/edit', 'AdminInvoiceController@edit');
+$router->post('/sso/invoice/{id}/delete', 'AdminInvoiceController@delete');
+
 // Categories Admin
 $router->get('/sso/categories', 'AdminCategoryController@index');
 $router->any('/sso/categories/create', 'AdminCategoryController@create');

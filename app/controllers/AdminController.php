@@ -77,11 +77,22 @@ class AdminController extends Controller {
         $this->requireAdmin();
         if (!$this->isPost()) { $this->redirect(url('/sso/settings')); return; }
         $setting = new Setting();
-        $fields  = ['site_name','site_email','site_phone','site_whatsapp','site_instagram','site_tiktok','site_youtube','site_linkedin','site_address','social_video_1','social_video_2','social_video_3','trusted_clients'];
+        $fields  = ['site_name','site_email','site_phone','site_whatsapp','site_instagram','site_tiktok','site_youtube','site_linkedin','site_address','social_video_1','social_video_2','social_video_3','trusted_clients','signatory_name','signatory_role'];
         foreach ($fields as $field) {
             $val = $this->sanitize($this->input($field, ''));
             $setting->set($field, $val);
         }
+
+        $sig = $this->uploadFile('signature_image', 'signature');
+        if ($sig) {
+            $oldSig = $setting->get('signature_image');
+            if ($oldSig) {
+                $oldFile = ROOT_PATH . '/public/' . $oldSig;
+                if (file_exists($oldFile)) unlink($oldFile);
+            }
+            $setting->set('signature_image', $sig);
+        }
+
         $this->setFlash('success', 'Settings berhasil disimpan.');
         $this->redirect(url('/sso/settings'));
     }
